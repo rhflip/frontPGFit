@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Test mascotas 3D v6 — Zubi + Kora PBR</title>
+    <style>
+      body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 32px 20px; background: #fff; color: #111827; }
+      .container { max-width: 1100px; margin: 0 auto; }
+      h1 { font-size: 28px; letter-spacing: -0.5px; margin: 0 0 8px; }
+      h2 { font-size: 18px; font-weight: 600; margin: 0 0 12px; color: #4b5563; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+      @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+      .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; }
+      model-viewer { width: 100%; height: 400px; background: #ffffff; --poster-color: transparent; border-radius: 12px; }
+      .meta { margin-top: 12px; font-size: 13px; color: #6b7280; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+      .meta strong { color: #111827; }
+      .bg-black { background: #0a0a0a; color: #fff; }
+      .bg-cream { background: #fce7f3; }
+      .backdrops { display: flex; gap: 8px; margin-top: 8px; }
+      .backdrops button { padding: 6px 12px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 12px; }
+      .backdrops button.active { background: #111827; color: #fff; border-color: #111827; }
+      .status { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+      .status.pbr-ok { background: #dcfce7; color: #166534; }
+      .status.pending { background: #fef3c7; color: #92400e; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Test mascotas 3D v6 · <span style="background: linear-gradient(135deg, #951b81, #e6007e); -webkit-background-clip: text; color: transparent;">PBR fix</span></h1>
+      <h2>Validación visual: rotate viewport (drag mouse), confirm brand identity Zubi cyan + Kora naranja sobre fondo blanco</h2>
+
+      <div class="backdrops">
+        <button data-bg="white" class="active" onclick="setBg('white', this)">Fondo blanco</button>
+        <button data-bg="cream" onclick="setBg('cream', this)">Fondo crema</button>
+        <button data-bg="black" onclick="setBg('black', this)">Fondo oscuro</button>
+      </div>
+
+      <div class="grid">
+        <div class="card" id="card-zubi">
+          <h2>Zubi — GLB v6 <span class="status pbr-ok">PBR OK</span></h2>
+          <model-viewer
+            src="/assets/3d/zubi_v6.glb"
+            alt="Zubi 3D mascota PropiedadGO"
+            camera-controls
+            auto-rotate
+            rotation-per-second="15deg"
+            interaction-prompt="none"
+            exposure="1.0"
+            shadow-intensity="0.6"
+            environment-image="neutral"
+            camera-orbit="0deg 75deg 3.5m">
+          </model-viewer>
+          <div class="meta">
+            <div><strong>baseColor</strong>: #1E90D6 <span style="display:inline-block; width:12px; height:12px; background:#1E90D6; border-radius:2px; vertical-align:middle;"></span></div>
+            <div><strong>metallic</strong>: 0.20 · <strong>roughness</strong>: 0.60</div>
+            <div><strong>size</strong>: 522 KB (Draco compressed)</div>
+            <div><strong>animations</strong>: <span class="status pending">Pending M4</span> (Idle_Breath + Celebrate)</div>
+          </div>
+        </div>
+
+        <div class="card" id="card-kora">
+          <h2>Kora — GLB v6 <span class="status pbr-ok">PBR OK</span></h2>
+          <model-viewer
+            src="/assets/3d/kora_v6.glb"
+            alt="Kora 3D mascota PropiedadGO"
+            camera-controls
+            auto-rotate
+            rotation-per-second="12deg"
+            interaction-prompt="none"
+            exposure="1.0"
+            shadow-intensity="0.6"
+            environment-image="neutral"
+            camera-orbit="0deg 75deg 3.5m">
+          </model-viewer>
+          <div class="meta">
+            <div><strong>baseColor</strong>: #F39C2A <span style="display:inline-block; width:12px; height:12px; background:#F39C2A; border-radius:2px; vertical-align:middle;"></span></div>
+            <div><strong>metallic</strong>: 0.20 · <strong>roughness</strong>: 0.60</div>
+            <div><strong>size</strong>: 434 KB (Draco compressed)</div>
+            <div><strong>animations</strong>: <span class="status pending">Pending M4</span> (Idle_Breath + Celebrate)</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 32px; padding: 16px; background: #fef3c7; border-radius: 8px; font-size: 13px;">
+        <strong>Nota</strong>: página <code>noindex</code> — solo validación visual. Pipeline M0 (.blend maestro) + M1 (PBR materials) + M2 (export GLB Draco + PNG + WebP) ejecutado 2026-07-06 noche.
+        <br />Backlog M3 (rig mínimo) + M4 (Idle_Breath + Celebrate animations) pendiente decisión post-validación.
+      </p>
+    </div>
+
+    <script type="module" src="/model-viewer.min.js"></script>
+    <script>
+      function setBg(bg, btn) {
+        document.querySelectorAll('.backdrops button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const colors = { white: '#ffffff', cream: '#fce7f3', black: '#0a0a0a' };
+        document.querySelectorAll('model-viewer').forEach(mv => {
+          mv.style.background = colors[bg];
+        });
+      }
+    </script>
+  </body>
+</html>
