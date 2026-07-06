@@ -1,16 +1,36 @@
 {
+  "id": "/",
   "name": "PGFit — Sistema operativo financiero para gimnasios",
   "short_name": "PGFit",
   "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "lang": "es",
   "scope": "/",
-  "description": "Software integral para gimnasios, centros de pilates y academias. Cobros SEPA, TicketBAI/VeriFactu, reserva de clases.",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
   "theme_color": "#e6007e",
-  "orientation": "portrait",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "finance"],
+  "description": "Software integral para gimnasios, centros de pilates y academias. Cobros SEPA, facturación TicketBAI/VeriFactu, reserva de clases y app para clientes.",
   "icons": [
-    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-  ]
+    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "/pgfit-studio-wellness.jpg", "sizes": "1200x1200", "type": "image/jpeg", "form_factor": "wide", "label": "Wellness studio con PGFit" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Empezar gratis",
+      "short_name": "Empezar",
+      "description": "Registro rápido en PGFit",
+      "url": "/?src=shortcut&action=register",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": []
 }
