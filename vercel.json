@@ -1,0 +1,47 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.pgfit.propiedadgo.com" }],
+      "destination": "https://pgfit.propiedadgo.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/pgfit",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/legal/:path*",
+      "destination": "https://propiedadgo.com/legal/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sw.js",
+      "destination": "/sw-cleanup.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://contable.propiedadgo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" }
+      ]
+    },
+    {
+      "source": "/(favicon.svg|icon-.+\\.png|.+\\.webp|.+\\.jpg)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
