@@ -41,11 +41,12 @@
         <div class="card" id="card-zubi">
           <h2>Zubi — GLB v6 <span class="status pbr-ok">PBR OK</span></h2>
           <model-viewer
+            id="mv-zubi"
             src="/assets/3d/zubi.glb"
             alt="Zubi 3D mascota PropiedadGO"
             camera-controls
-            auto-rotate
-            rotation-per-second="15deg"
+            autoplay
+            animation-name="Idle_Breath"
             interaction-prompt="none"
             exposure="1.15"
             shadow-intensity="0.4"
@@ -53,22 +54,29 @@
             tone-mapping="commerce"
             camera-orbit="0deg 75deg 3.5m">
           </model-viewer>
+          <div class="backdrops" style="margin-top:8px;">
+            <button onclick="playAnim('mv-zubi','Idle_Breath')">Idle_Breath</button>
+            <button onclick="playAnim('mv-zubi','Idle_LookAround')">LookAround</button>
+            <button onclick="playAnim('mv-zubi','Wave')">Wave</button>
+            <button onclick="playAnim('mv-zubi','Celebrate')">Celebrate</button>
+          </div>
           <div class="meta">
             <div><strong>baseColor</strong>: #1E90D6 <span style="display:inline-block; width:12px; height:12px; background:#1E90D6; border-radius:2px; vertical-align:middle;"></span></div>
             <div><strong>metallic</strong>: 0.20 · <strong>roughness</strong>: 0.60</div>
-            <div><strong>size</strong>: 522 KB (Draco compressed)</div>
-            <div><strong>animations</strong>: <span class="status pending">Pending M4</span> (Idle_Breath + Celebrate)</div>
+            <div><strong>size</strong>: 66 KB (Draco + 4 anims)</div>
+            <div><strong>animations</strong>: <span class="status pbr-ok">M4 LIVE</span> Idle_Breath · LookAround · Wave · Celebrate</div>
           </div>
         </div>
 
         <div class="card" id="card-kora">
           <h2>Kora — GLB v6 <span class="status pbr-ok">PBR OK</span></h2>
           <model-viewer
+            id="mv-kora"
             src="/assets/3d/kora.glb"
             alt="Kora 3D mascota PropiedadGO"
             camera-controls
-            auto-rotate
-            rotation-per-second="12deg"
+            autoplay
+            animation-name="Idle_Breath"
             interaction-prompt="none"
             exposure="1.15"
             shadow-intensity="0.4"
@@ -76,11 +84,17 @@
             tone-mapping="commerce"
             camera-orbit="0deg 75deg 3.5m">
           </model-viewer>
+          <div class="backdrops" style="margin-top:8px;">
+            <button onclick="playAnim('mv-kora','Idle_Breath')">Idle_Breath</button>
+            <button onclick="playAnim('mv-kora','Idle_LookAround')">LookAround</button>
+            <button onclick="playAnim('mv-kora','Wave')">Wave</button>
+            <button onclick="playAnim('mv-kora','Celebrate')">Celebrate</button>
+          </div>
           <div class="meta">
             <div><strong>baseColor</strong>: #F39C2A <span style="display:inline-block; width:12px; height:12px; background:#F39C2A; border-radius:2px; vertical-align:middle;"></span></div>
             <div><strong>metallic</strong>: 0.20 · <strong>roughness</strong>: 0.60</div>
-            <div><strong>size</strong>: 434 KB (Draco compressed)</div>
-            <div><strong>animations</strong>: <span class="status pending">Pending M4</span> (Idle_Breath + Celebrate)</div>
+            <div><strong>size</strong>: 66 KB (Draco + 4 anims)</div>
+            <div><strong>animations</strong>: <span class="status pbr-ok">M4 LIVE</span> Idle_Breath · LookAround · Wave · Celebrate</div>
           </div>
         </div>
       </div>
@@ -94,12 +108,19 @@
     <script type="module" src="/model-viewer.min.js"></script>
     <script>
       function setBg(bg, btn) {
-        document.querySelectorAll('.backdrops button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.backdrops button[data-bg]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const colors = { white: '#ffffff', cream: '#fce7f3', black: '#0a0a0a' };
         document.querySelectorAll('model-viewer').forEach(mv => {
           mv.style.background = colors[bg];
         });
+      }
+      function playAnim(mvId, animName) {
+        const mv = document.getElementById(mvId);
+        if (!mv) return;
+        mv.animationName = animName;
+        mv.currentTime = 0;
+        mv.play();
       }
     </script>
   </body>
