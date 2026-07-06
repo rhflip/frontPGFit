@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Benchmark mascotas 3D — v6 actual vs Hunyuan3D-2 vs Trellis</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { font-family: Inter, -apple-system, "Segoe UI", sans-serif; margin: 0; padding: 24px; background: #fafafa; color: #111827; }
+      .container { max-width: 1400px; margin: 0 auto; }
+      h1 { font-size: 26px; letter-spacing: -0.5px; margin: 0 0 8px; }
+      h2 { font-size: 15px; font-weight: 600; margin: 0 0 12px; color: #4b5563; }
+      .canon { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+      .canon img { width: 100%; max-height: 300px; object-fit: contain; border-radius: 12px; border: 1px solid #e5e7eb; background: #fff; padding: 8px; }
+      .canon .label { font-size: 12px; color: #6b7280; text-align: center; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+      .mascota-row { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 24px; border: 1px solid #e5e7eb; }
+      .mascota-row h3 { font-size: 18px; margin: 0 0 16px; letter-spacing: -0.3px; }
+      .comparison { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      @media (max-width: 900px) { .comparison { grid-template-columns: 1fr; } }
+      .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px; background: #fafafa; }
+      .card h4 { font-size: 13px; margin: 0 0 8px; font-family: 'JetBrains Mono', monospace; color: #4b5563; }
+      model-viewer { width: 100%; height: 320px; background: #ffffff; border-radius: 8px; }
+      .meta { margin-top: 8px; font-size: 11px; color: #6b7280; font-family: 'JetBrains Mono', monospace; line-height: 1.6; }
+      .backdrops { display: flex; gap: 6px; margin-top: 6px; }
+      .backdrops button { padding: 4px 8px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 11px; }
+      .backdrops button.active { background: #111827; color: #fff; border-color: #111827; }
+      .status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+      .ok { background: #dcfce7; color: #166534; }
+      .pending { background: #fef3c7; color: #92400e; }
+      .fail { background: #fee2e2; color: #991b1b; }
+      .criteria-table { width: 100%; border-collapse: collapse; margin-top: 32px; background: #fff; border-radius: 12px; overflow: hidden; }
+      .criteria-table th, .criteria-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 13px; }
+      .criteria-table th { background: #f3f4f6; font-weight: 600; }
+      .criteria-table td:first-child { font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Benchmark image-to-3D · <span style="background:linear-gradient(135deg,#951b81,#e6007e);-webkit-background-clip:text;color:transparent;">2D canon → 3D</span></h1>
+      <h2>Comparativa: GLB v6 actual (Stable Fast 3D + Trellis original) vs Hunyuan3D-2 vs Trellis re-run · con canon hiperrealista v2 como input</h2>
+
+      <div class="canon">
+        <div>
+          <img src="https://tnfbpoiwbanwhfwrjvhe.supabase.co/storage/v1/object/public/marketing-brand-assets/pgfit/mascotas-canon.jpg" alt="Zubi canon 2D" onerror="this.style.display='none'; this.nextElementSibling.textContent='Zubi canon: agents/marketing-content/brand/mascotas/zubi_hiperrealista_v2.jpg (2 ojos cartoon + base azul)'" />
+          <div class="label">Zubi canon 2D · 2 ojos cartoon + esfera erizada #1E90D6 + base azul</div>
+        </div>
+        <div>
+          <img src="https://tnfbpoiwbanwhfwrjvhe.supabase.co/storage/v1/object/public/marketing-brand-assets/pgfit/mascotas-canon.jpg" alt="Kora canon 2D" onerror="this.style.display='none'; this.nextElementSibling.textContent='Kora canon: agents/marketing-content/brand/mascotas/kora_hiperrealista_v2.jpg (1 ojo cíclope + 4 patas pulpo)'" />
+          <div class="label">Kora canon 2D · 1 ojo cíclope + esfera erizada #F39C2A + 4 patas pulpo</div>
+        </div>
+      </div>
+
+      <div class="backdrops">
+        <span style="font-size:12px; color:#4b5563;">Fondo:</span>
+        <button data-bg="white" class="active" onclick="setBg('white', this)">Blanco</button>
+        <button data-bg="cream" onclick="setBg('cream', this)">Crema</button>
+        <button data-bg="black" onclick="setBg('black', this)">Oscuro</button>
+      </div>
+
+      <!-- Zubi row -->
+      <div class="mascota-row">
+        <h3>Zubi · <span style="color:#1E90D6;">#1E90D6</span></h3>
+        <div class="comparison">
+          <div class="card">
+            <h4>v6 actual (Stable Fast 3D → Blender M1+M2)</h4>
+            <model-viewer src="/assets/3d/zubi_v6.glb" camera-controls auto-rotate rotation-per-second="15deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m"></model-viewer>
+            <div class="meta">
+              <strong>size</strong>: 522 KB (Draco) · <strong>PBR</strong>: manual M1 (baseColor cyan + m 0.2 + r 0.6)<br />
+              <strong>ojos</strong>: <span class="status fail">MISSING</span> · <strong>base</strong>: <span class="status ok">OK</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Hunyuan3D-2 (canon hiperrealista input)</h4>
+            <model-viewer src="/assets/3d/benchmark/hunyuan3d/zubi_v6bench.glb" camera-controls auto-rotate rotation-per-second="15deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m" onerror="this.parentElement.querySelector('.meta').innerHTML+='<br /><span class=status pending>PENDING benchmark background</span>'"></model-viewer>
+            <div class="meta">
+              <strong>model</strong>: tencent/hunyuan3d-2 · <strong>steps</strong>: 50 · <strong>octree</strong>: 256<br />
+              <strong>PBR</strong>: <span class="status pending">TBD</span> · <strong>ojos</strong>: <span class="status pending">TBD</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Trellis (Microsoft · 2025)</h4>
+            <model-viewer src="/assets/3d/benchmark/trellis/zubi_v6bench.glb" camera-controls auto-rotate rotation-per-second="15deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m" onerror="this.parentElement.querySelector('.meta').innerHTML+='<br /><span class=status pending>PENDING benchmark background</span>'"></model-viewer>
+            <div class="meta">
+              <strong>model</strong>: firtoz/trellis · <strong>texture</strong>: 1024 · <strong>simplify</strong>: 0.95<br />
+              <strong>PBR</strong>: <span class="status pending">TBD</span> · <strong>ojos</strong>: <span class="status pending">TBD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kora row -->
+      <div class="mascota-row">
+        <h3>Kora · <span style="color:#F39C2A;">#F39C2A</span></h3>
+        <div class="comparison">
+          <div class="card">
+            <h4>v6 actual (Stable Fast 3D → Blender M1+M2)</h4>
+            <model-viewer src="/assets/3d/kora_v6.glb" camera-controls auto-rotate rotation-per-second="12deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m"></model-viewer>
+            <div class="meta">
+              <strong>size</strong>: 434 KB (Draco) · <strong>PBR</strong>: manual M1 (baseColor naranja + m 0.2 + r 0.6)<br />
+              <strong>ojo cíclope</strong>: <span class="status fail">MISSING</span> · <strong>4 patas</strong>: <span class="status ok">OK</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Hunyuan3D-2 (canon hiperrealista input)</h4>
+            <model-viewer src="/assets/3d/benchmark/hunyuan3d/kora_v6bench.glb" camera-controls auto-rotate rotation-per-second="12deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m" onerror="this.parentElement.querySelector('.meta').innerHTML+='<br /><span class=status pending>PENDING benchmark background</span>'"></model-viewer>
+            <div class="meta">
+              <strong>model</strong>: tencent/hunyuan3d-2 · <strong>steps</strong>: 50 · <strong>octree</strong>: 256<br />
+              <strong>PBR</strong>: <span class="status pending">TBD</span> · <strong>ojo cíclope</strong>: <span class="status pending">TBD</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Trellis (Microsoft · 2025)</h4>
+            <model-viewer src="/assets/3d/benchmark/trellis/kora_v6bench.glb" camera-controls auto-rotate rotation-per-second="12deg" interaction-prompt="none" exposure="1.0" shadow-intensity="0.6" environment-image="neutral" camera-orbit="0deg 75deg 3.5m" onerror="this.parentElement.querySelector('.meta').innerHTML+='<br /><span class=status pending>PENDING benchmark background</span>'"></model-viewer>
+            <div class="meta">
+              <strong>model</strong>: firtoz/trellis · <strong>texture</strong>: 1024 · <strong>simplify</strong>: 0.95<br />
+              <strong>PBR</strong>: <span class="status pending">TBD</span> · <strong>ojo cíclope</strong>: <span class="status pending">TBD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:40px;">Criteria comparativa objetiva</h2>
+      <table class="criteria-table">
+        <thead>
+          <tr>
+            <th>Criterio</th>
+            <th>v6 actual (SF3D + Trellis original)</th>
+            <th>Hunyuan3D-2</th>
+            <th>Trellis (canon input)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Fidelidad silueta (esfera erizada)</td><td>✅ preserva textura fibrosa</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Ojos cartoon Zubi (2)</td><td>❌ missing (fusionados a geometría)</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Ojo cíclope Kora (1)</td><td>❌ missing</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Patas pulpo Kora (4)</td><td>✅ preservadas</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Base azul Zubi</td><td>✅ ovalada visible</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Materiales PBR nativos</td><td>⚠️ manual override M1 script</td><td>⏳ pending</td><td>⏳ pending (texture_size 1024)</td></tr>
+          <tr><td>Import Blender OK</td><td>✅ verified (M0 script)</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Size GLB (Draco compressed)</td><td>522 KB / 434 KB</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Limpieza mesh (no artifacts)</td><td>⚠️ 2 figuras duplicadas por mascota</td><td>⏳ pending</td><td>⏳ pending</td></tr>
+          <tr><td>Time / Coste</td><td>Local Blender · €0</td><td>~$0.10/gen Replicate</td><td>~$0.15/gen Replicate</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:24px; padding:16px; background:#fef3c7; border-radius:8px; font-size:13px;">
+        <strong>Filosofía Presidente</strong>: 2D es canon. 3D debe converger al canon. Nunca al revés.
+        Este benchmark decide si algún modelo image-to-3D preserva mejor los rasgos icónicos (ojos + patas) que el pipeline SF3D actual.
+        Si ninguno preserva → Opción A confirmada: modelar rasgos manualmente en Blender como parte del <code>.blend</code> maestro (Eyes_Zubi + Legs_Kora reutilizables).
+      </p>
+    </div>
+
+    <script type="module" src="/model-viewer.min.js"></script>
+    <script>
+      function setBg(bg, btn) {
+        document.querySelectorAll('.backdrops button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const colors = { white: '#ffffff', cream: '#fce7f3', black: '#0a0a0a' };
+        document.querySelectorAll('model-viewer').forEach(mv => mv.style.background = colors[bg]);
+      }
+    </script>
+  </body>
+</html>
