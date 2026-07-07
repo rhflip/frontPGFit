@@ -118,11 +118,32 @@
     </script>
 
     <style>
+      /* v4 — Brand tokens from BRAND-IDENTITY.md §7 · Sistema PropiedadGO */
+      :root {
+        --pg-primary: #e6007e;
+        --pg-secondary: #951b81;
+        --pg-gradient: linear-gradient(135deg, #951b81 0%, #e6007e 100%);
+        --pg-gradient-hover: linear-gradient(135deg, #7c1670 0%, #d4006e 100%);
+        --pg-tint: #fdf2f8;
+        --pg-tint-strong: #fce4f1;
+        --pg-radius: 12px;
+        --pg-radius-lg: 16px;
+        --pg-radius-xl: 24px;
+        --pg-ink-strong: #111827;
+        --pg-ink-body: #4b5563;
+        --pg-surface: #ffffff;
+        --pg-surface-alt: #f9fafb;
+        --pg-border: #e5e7eb;
+        /* Double-layer shadow (BRAND-IDENTITY.md §7 Principios visuales Connect) */
+        --pg-shadow-card: 0 0 0 1px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --pg-shadow-card-hover: 0 0 0 1px rgba(230,0,126,0.15), 0 20px 30px -6px rgba(149,27,129,0.15), 0 8px 12px -4px rgba(230,0,126,0.10);
+        --pg-shadow-cta: 0 8px 24px -4px rgba(230,0,126,0.35);
+      }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #111827; background: #ffffff; line-height: 1.6; }
-      .pgfit-gradient { background: linear-gradient(135deg, #951b81 0%, #e6007e 100%); }
-      .pgfit-brand-text { background: linear-gradient(135deg, #951b81, #e6007e); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
-      .pgfit-hero-bg { background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%); }
+      body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--pg-ink-strong); background: var(--pg-surface); line-height: 1.6; }
+      .pgfit-gradient { background: var(--pg-gradient); }
+      .pgfit-brand-text { background: var(--pg-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+      .pgfit-hero-bg { background: linear-gradient(180deg, var(--pg-tint) 0%, var(--pg-surface) 100%); }
       .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
       header.top-nav { padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
       header.top-nav .container { display: flex; align-items: center; justify-content: space-between; }
@@ -137,20 +158,85 @@
       h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
       p.subtitle { font-size: 19px; color: #4b5563; max-width: 760px; margin-bottom: 32px; line-height: 1.65; }
       p.section-intro { font-size: 17px; color: #4b5563; max-width: 760px; margin-bottom: 40px; line-height: 1.65; }
-      .cta-primary { display: inline-block; padding: 16px 36px; color: white; font-weight: 600; border-radius: 12px; text-decoration: none; box-shadow: 0 8px 24px -4px rgba(149,27,129,0.35); font-size: 16px; }
-      .cta-secondary { display: inline-block; padding: 16px 40px; background: white; color: #951b81; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 12px 28px -8px rgba(0,0,0,0.2); font-size: 16px; }
+      /* CTAs — gradient hover animation (BRAND-IDENTITY.md §7 line 330) */
+      .cta-primary {
+        display: inline-block; padding: 16px 36px; color: white; font-weight: 600;
+        border-radius: var(--pg-radius); text-decoration: none; font-size: 16px;
+        background: var(--pg-gradient); background-size: 200% 200%; background-position: 0% 50%;
+        box-shadow: var(--pg-shadow-cta); text-shadow: 0 1px 2px rgba(0,0,0,0.10);
+        transition: background-position 0.6s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      }
+      .cta-primary:hover { background-position: 100% 50%; box-shadow: 0 12px 32px -4px rgba(230,0,126,0.50); transform: translateY(-1px); }
+      .cta-primary:active { transform: translateY(0); }
+      .cta-secondary {
+        display: inline-block; padding: 16px 40px; background: white; color: var(--pg-secondary);
+        font-weight: 700; border-radius: var(--pg-radius); text-decoration: none;
+        box-shadow: 0 12px 28px -8px rgba(0,0,0,0.2); font-size: 16px;
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+      }
+      .cta-secondary:hover { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.28); transform: translateY(-1px); }
       .cta-meta { display: block; margin-top: 16px; color: #6b7280; font-size: 14px; }
       .grid-3 { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
       .grid-4 { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-      .feature-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px; }
-      .feature-card .icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: linear-gradient(135deg, #fdf2f8, #fce4f1); margin-bottom: 16px; }
-      .feature-card p { font-size: 14px; color: #4b5563; line-height: 1.7; }
-      .vertical-card { text-align: center; background: white; padding: 28px; border-radius: 12px; border: 1px solid #e5e7eb; }
-      .vertical-card .emoji { font-size: 32px; display: block; margin-bottom: 12px; }
-      .vertical-card p { font-size: 13px; color: #6b7280; }
-      /* v4: hero single-column (removed hero-mascotas round WebP fallback rotos) */
-      .pgfit-hero-bg .container { max-width: 720px; }
-      .hero-copy { text-align: left; }
+      /* Feature cards — double-layer shadow BRAND-IDENTITY §7 */
+      .feature-card {
+        background: var(--pg-surface); border: 1px solid var(--pg-border); border-radius: var(--pg-radius-lg);
+        padding: 28px; box-shadow: var(--pg-shadow-card);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+      .feature-card:hover { transform: translateY(-3px); box-shadow: var(--pg-shadow-card-hover); border-color: rgba(230,0,126,0.15); }
+      .feature-card .icon {
+        width: 48px; height: 48px; border-radius: var(--pg-radius); display: flex; align-items: center; justify-content: center;
+        font-size: 24px; background: linear-gradient(135deg, var(--pg-tint), var(--pg-tint-strong));
+        margin-bottom: 16px; transition: transform 0.3s ease;
+      }
+      .feature-card:hover .icon { transform: scale(1.08) rotate(-3deg); }
+      .feature-card p { font-size: 14px; color: var(--pg-ink-body); line-height: 1.7; }
+      /* Vertical cards — imagen background + overlay + text delante bien legible */
+      .vertical-card {
+        position: relative; text-align: center; border-radius: var(--pg-radius-lg);
+        border: 1px solid var(--pg-border); overflow: hidden; min-height: 220px;
+        display: flex; flex-direction: column; justify-content: flex-end;
+        padding: 20px 22px 24px; box-shadow: var(--pg-shadow-card);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        isolation: isolate;
+      }
+      .vertical-card:hover { transform: translateY(-4px); box-shadow: var(--pg-shadow-card-hover); }
+      .vertical-card .bg-img {
+        position: absolute; inset: 0; z-index: -2; object-fit: cover; width: 100%; height: 100%;
+        opacity: 0.38; transition: opacity 0.3s ease, transform 0.5s ease;
+      }
+      .vertical-card:hover .bg-img { opacity: 0.55; transform: scale(1.05); }
+      .vertical-card::before {
+        content: ''; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.92) 100%);
+      }
+      .vertical-card.placeholder::before { background: linear-gradient(135deg, var(--pg-tint) 0%, var(--pg-tint-strong) 100%); }
+      .vertical-card .emoji { font-size: 40px; display: block; margin-bottom: 12px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.10)); }
+      .vertical-card h4 { color: var(--pg-ink-strong); font-size: 18px; margin-bottom: 6px; }
+      .vertical-card p { font-size: 13px; color: var(--pg-ink-body); font-weight: 500; }
+      /* v4: hero alignment restored — grid-2col con hero-copy left + espacio derecha */
+      .pgfit-hero-bg .container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+      .hero-copy { min-width: 0; text-align: left; }
+      .hero-visual-slot { min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
+      .hero-visual-slot::before {
+        content: ''; position: absolute; inset: 20px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(230,0,126,0.08) 0%, rgba(149,27,129,0.04) 40%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero-visual-slot img { max-width: 320px; width: 100%; height: auto; filter: drop-shadow(0 30px 60px -10px rgba(30,144,214,0.30)); animation: hero-mascota-float 5s ease-in-out infinite; }
+      @keyframes hero-mascota-float {
+        0%, 100% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(-14px) rotate(2deg); }
+      }
+      @media (max-width: 900px) {
+        .pgfit-hero-bg .container { grid-template-columns: 1fr; gap: 32px; }
+        .hero-visual-slot { min-height: 260px; order: -1; }
+        .hero-visual-slot img { max-width: 220px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-visual-slot img, .cta-primary, .feature-card, .vertical-card { animation: none !important; transition: none !important; }
+      }
       /* Wellness studio visual section */
       .wellness-visual { background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%); padding: 40px 0; }
       .wellness-visual .container { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
@@ -215,6 +301,45 @@
         .cta-buddy.buddy-kora { bottom: -10px; left: -44px; width: 52px; height: 52px; }
       }
       @media (max-width: 480px) { .cta-buddy { display: none; } }
+      /* Pricing cards enhanced (BRAND-IDENTITY §7 tokens + featured plan badge) */
+      .plan-card {
+        text-decoration: none; color: inherit; display: block; cursor: pointer;
+        position: relative; overflow: hidden;
+      }
+      .plan-card h3 {
+        display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+        font-size: 20px; margin-bottom: 12px; color: var(--pg-ink-strong);
+      }
+      .plan-card .plan-price {
+        font-size: 28px; font-weight: 800;
+        background: var(--pg-gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+        letter-spacing: -0.5px;
+      }
+      .plan-card .plan-per { font-size: 14px; color: var(--pg-ink-body); -webkit-background-clip: unset; background-clip: unset; background: none; font-weight: 500; }
+      .plan-card p { font-size: 14px; color: var(--pg-ink-body); line-height: 1.65; margin-bottom: 16px; }
+      .plan-card .plan-cta {
+        display: inline-flex; align-items: center; gap: 6px; margin-top: 4px;
+        color: var(--pg-primary); font-weight: 700; font-size: 14px;
+        transition: gap 0.3s ease;
+      }
+      .plan-card:hover .plan-cta { gap: 12px; }
+      /* Featured plan: gradient border + badge */
+      .plan-featured {
+        border-color: transparent; position: relative;
+        background: linear-gradient(var(--pg-surface), var(--pg-surface)) padding-box,
+                    var(--pg-gradient) border-box;
+        border: 2px solid transparent;
+        box-shadow: 0 0 0 1px rgba(230,0,126,0.15), 0 20px 30px -6px rgba(149,27,129,0.20), 0 8px 12px -4px rgba(230,0,126,0.15);
+        transform: translateY(-4px);
+      }
+      .plan-featured:hover { transform: translateY(-8px); }
+      .plan-badge {
+        position: absolute; top: 12px; right: 12px;
+        background: var(--pg-gradient); color: white; font-size: 11px; font-weight: 700;
+        padding: 5px 10px; border-radius: 999px; letter-spacing: 0.5px;
+        text-transform: uppercase; text-shadow: 0 1px 2px rgba(0,0,0,0.10);
+        box-shadow: 0 4px 12px rgba(230,0,126,0.30);
+      }
     </style>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -247,7 +372,9 @@
           </span>
           <span class="cta-meta">7 preguntas · 3 minutos · 1 semana setup gratis si participas</span>
         </div>
-        <!-- v4: hero-mascotas round WebP removidos (fallbacks 404 en frontPGFit repo, avatares 2D quedan como peekaboo del CTA) -->
+        <div class="hero-visual-slot" role="presentation" aria-hidden="true">
+          <img src="/assets/mascotas/zubi-transparent.png" alt="" loading="eager" decoding="async" fetchpriority="high" />
+        </div>
       </div>
     </section>
 
@@ -320,21 +447,29 @@
         <p class="section-intro text-center" style="margin-left: auto; margin-right: auto;">Cada vertical tiene plantillas, vocabulario y reportes específicos. Configurado de fábrica para tu modelo de negocio.</p>
         <div class="grid-4">
           <div class="vertical-card">
+            <picture>
+              <source type="image/webp" srcset="/assets/verticals/gym.webp" />
+              <img src="/assets/verticals/gym.png" alt="" class="bg-img" loading="lazy" decoding="async" />
+            </picture>
             <span class="emoji">🏋️</span>
             <h4>Gimnasios</h4>
             <p>Cuota mensual + bonos + venta nutrición</p>
           </div>
           <div class="vertical-card">
+            <picture>
+              <source type="image/webp" srcset="/assets/verticals/pilates.webp" />
+              <img src="/assets/verticals/pilates.png" alt="" class="bg-img" loading="lazy" decoding="async" />
+            </picture>
             <span class="emoji">🧘</span>
             <h4>Pilates / Yoga</h4>
             <p>Bonos por clases + reservas + lista de espera</p>
           </div>
-          <div class="vertical-card">
+          <div class="vertical-card placeholder">
             <span class="emoji">📚</span>
             <h4>Academias</h4>
             <p>Refuerzo, idiomas, extraescolares + matrículas anuales</p>
           </div>
-          <div class="vertical-card">
+          <div class="vertical-card placeholder">
             <span class="emoji">⚡</span>
             <h4>CrossFit / Funcional</h4>
             <p>WODs + atletas + multi-coach + competiciones</p>
@@ -347,21 +482,22 @@
       <div class="container">
         <h2>Planes</h2>
         <p class="section-intro">Tarifas mensuales transparentes según volumen de socios activos. Sin permanencia ni coste de setup salvo participación en encuesta presales.</p>
-        <div class="grid-3">
-          <a href="https://contable.propiedadgo.com/register?product=gym&plan=FREE&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_free" class="feature-card plan-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer;">
-            <h3>FREE — €0</h3>
+        <div class="grid-3 pricing-grid">
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=FREE&utm_source=pgfit_landing&utm_medium=plans_v4&utm_campaign=plan_free" class="feature-card plan-card">
+            <h3>FREE <span class="plan-price">€0</span></h3>
             <p><strong>Setup gratuito 1 semana</strong> incluido para participantes en la encuesta presales Q2 2026. Acceso completo a todas las funcionalidades durante el período.</p>
-            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Empezar gratis →</span>
+            <span class="plan-cta">Empezar gratis →</span>
           </a>
-          <a href="https://contable.propiedadgo.com/register?product=gym&plan=PRO&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_pro" class="feature-card plan-card" style="border-color:#f3a4d7; text-decoration:none; color:inherit; display:block; cursor:pointer;">
-            <h3>PRO — €29/mes</h3>
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=PRO&utm_source=pgfit_landing&utm_medium=plans_v4&utm_campaign=plan_pro" class="feature-card plan-card plan-featured">
+            <span class="plan-badge">Recomendado</span>
+            <h3>PRO <span class="plan-price">€29<span class="plan-per">/mes</span></span></h3>
             <p>Hasta 100 socios activos. Cobros SEPA + Bizum + tarjeta. Facturación TicketBAI/VeriFactu/SII. Reserva de clases. App PWA cliente.</p>
-            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Contratar PRO →</span>
+            <span class="plan-cta">Contratar PRO →</span>
           </a>
-          <a href="https://contable.propiedadgo.com/register?product=gym&plan=STUDIO&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_studio" class="feature-card plan-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer;">
-            <h3>STUDIO — €79/mes</h3>
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=STUDIO&utm_source=pgfit_landing&utm_medium=plans_v4&utm_campaign=plan_studio" class="feature-card plan-card">
+            <h3>STUDIO <span class="plan-price">€79<span class="plan-per">/mes</span></span></h3>
             <p>Socios ilimitados. Conciliación Open Banking + multi-coach + IA para cierres anuales + soporte prioritario. Para centros con 200+ socios.</p>
-            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Contratar STUDIO →</span>
+            <span class="plan-cta">Contratar STUDIO →</span>
           </a>
         </div>
       </div>
