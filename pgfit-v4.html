@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="es" data-product="pgfit">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Manifest específico PGFit (NO usar /manifest.webmanifest que es de captación) -->
+    <link rel="manifest" href="/pgfit-manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4" />
+    <!-- SW self-cleanup: si el user visitó anteriormente pgfit cuando servía captación shell,
+         el SW de captación cacheó ese content y ahora intercepta pgfit.html. Al cargar pgfit,
+         unregister todos SWs + clear caches para forzar next visit fetch fresh directo. -->
+    <script>
+      (function () {
+        if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
+        try {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) {
+              try { r.unregister(); } catch (e) { /* noop */ }
+            });
+          });
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) {
+              keys.forEach(function (k) {
+                try { caches.delete(k); } catch (e) { /* noop */ }
+              });
+            });
+          }
+        } catch (e) { /* noop */ }
+      })();
+    </script>
+    <link rel="apple-touch-icon" href="/icon-192x192.png" />
+    <meta name="theme-color" content="#e6007e" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- ── SEO básico ─────────────────────────────────────────────────────── -->
+    <title>PGFit v4 — Sistema operativo financiero para gimnasios, pilates y academias</title>
+    <meta name="description" content="Software de gestión integral para gimnasios, centros de pilates y academias. Cobro recurrente SEPA + Bizum, facturación TicketBAI y VeriFactu, reserva de clases y app para clientes. Setup gratis 1 semana." />
+    <meta name="keywords" content="software gimnasio, software pilates, software academia, cuotas SEPA gym, facturación TicketBAI fitness, app reserva clases, gestión centro deportivo" />
+    <meta name="robots" content="noindex,follow" />
+
+    <!-- ── URL primaria + hreflang ── -->
+    <link rel="canonical" href="https://pgfit.propiedadgo.com/" />
+    <link rel="alternate" hreflang="es-ES" href="https://pgfit.propiedadgo.com/" />
+    <link rel="alternate" hreflang="es" href="https://pgfit.propiedadgo.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://pgfit.propiedadgo.com/" />
+
+    <!-- ── Open Graph ─────────────────────────────────────────────────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PGFit" />
+    <meta property="og:title" content="PGFit — Software para gimnasios, pilates y academias" />
+    <meta property="og:description" content="Cobro recurrente automático SEPA + Bizum, facturación TicketBAI/VeriFactu, reserva de clases y app para clientes. Todo en un solo sistema." />
+    <meta property="og:url" content="https://pgfit.propiedadgo.com/" />
+    <meta property="og:image" content="https://pgfit.propiedadgo.com/og-image.png" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- ── Twitter Card ───────────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PGFit — Software para gimnasios, pilates y academias" />
+    <meta name="twitter:description" content="Cobro recurrente SEPA + Bizum, facturación TicketBAI/VeriFactu, reserva de clases." />
+    <meta name="twitter:image" content="https://pgfit.propiedadgo.com/og-image.png" />
+
+    <!-- ── Schema.org JSON-LD ─────────────────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "PGFit",
+      "alternateName": "PGFit by PropiedadGO",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://pgfit.propiedadgo.com/",
+      "description": "Software de gestión integral para gimnasios, centros de pilates y academias. Cobro recurrente SEPA + Bizum, facturación TicketBAI y VeriFactu, reserva de clases y app para clientes.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "PropiedadGO",
+        "url": "https://propiedadgo.com/"
+      },
+      "offers": [
+        { "@type": "Offer", "name": "FREE", "price": "0", "priceCurrency": "EUR", "description": "Setup gratuito 1 semana para participantes en encuesta presales" },
+        { "@type": "Offer", "name": "PRO", "price": "29", "priceCurrency": "EUR", "description": "Hasta 100 socios activos + cobros SEPA + facturación TicketBAI/VeriFactu + reserva clases" },
+        { "@type": "Offer", "name": "STUDIO", "price": "79", "priceCurrency": "EUR", "description": "Socios ilimitados + app cliente + conciliación Open Banking + multi-coach" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué tipos de centros deportivos puede gestionar PGFit?",
+          "acceptedAnswer": { "@type": "Answer", "text": "PGFit está diseñado para gimnasios tradicionales (cuota mensual + bonos), centros de pilates y yoga (bonos por clases + reservas + lista de espera), academias (refuerzo, idiomas, extraescolares + matrículas anuales) y CrossFit / centros de entrenamiento funcional (WODs + atletas + multi-coach + competiciones). Cada tipo de centro tiene plantillas y vocabulario específicos." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo funciona el cobro recurrente automático en PGFit?",
+          "acceptedAnswer": { "@type": "Answer", "text": "PGFit genera un mandato SEPA Direct Debit firmado por el socio (físico o digital con OTP). Cada periodo (mensual, trimestral, anual), el sistema lanza el adeudo automático al banco vía fichero pain.008. Soporta también Bizum recurrente (CIT) y tarjeta. Si el cobro falla (R-message R03/R09/R10), el sistema marca al socio como moroso, reintenta automáticamente y notifica al gestor del centro." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿PGFit cumple con TicketBAI, VeriFactu y SII?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí. PGFit emite facturas conformes a TicketBAI para los tres territorios forales del País Vasco (Araba, Bizkaia, Gipuzkoa — software garante registrado G88202601552295E), VeriFactu para territorio común (declaración responsable AEAT registrada bajo PropiedadGO SL conforme al RD 1007/2023) y SII para grandes empresas. Sin necesidad de configurar nada: el motor fiscal detecta el régimen según provincia del centro." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Incluye PGFit app móvil para los clientes del centro?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí, PGFit incluye una PWA (Progressive Web App) para los socios del centro: reserva de clases (con cupo máximo y lista de espera), cancelación, compra de bonos, calendario de actividades, notificaciones de cobros y comunicaciones masivas del centro. Se instala en móvil como app nativa sin pasar por App Store o Play Store, funciona en iOS y Android, y muestra la marca del centro (no la de PGFit)." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué necesito para empezar con PGFit?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Solo el alta como centro (≈10 minutos): nombre comercial, CIF, IBAN para cobros, datos del responsable. PGFit te guía en la configuración inicial: importación de socios desde Excel/CSV, alta de productos (cuotas, bonos, matrículas), configuración de clases y horarios. Si participas en nuestra encuesta presales pre-2026-Q3, recibes setup gratuito 1 semana con soporte humano." }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #111827; background: #ffffff; line-height: 1.6; }
+      .pgfit-gradient { background: linear-gradient(135deg, #951b81 0%, #e6007e 100%); }
+      .pgfit-brand-text { background: linear-gradient(135deg, #951b81, #e6007e); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+      .pgfit-hero-bg { background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%); }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+      header.top-nav { padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
+      header.top-nav .container { display: flex; align-items: center; justify-content: space-between; }
+      header.top-nav .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
+      header.top-nav svg { width: 40px; height: 40px; }
+      header.top-nav small { color: #be185d; font-weight: 600; margin-left: 4px; font-size: 13px; }
+      section { padding: 64px 0; }
+      h1 { font-size: 44px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.5px; }
+      h1 .sub { display: block; }
+      h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.4px; }
+      h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+      h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+      p.subtitle { font-size: 19px; color: #4b5563; max-width: 760px; margin-bottom: 32px; line-height: 1.65; }
+      p.section-intro { font-size: 17px; color: #4b5563; max-width: 760px; margin-bottom: 40px; line-height: 1.65; }
+      .cta-primary { display: inline-block; padding: 16px 36px; color: white; font-weight: 600; border-radius: 12px; text-decoration: none; box-shadow: 0 8px 24px -4px rgba(149,27,129,0.35); font-size: 16px; }
+      .cta-secondary { display: inline-block; padding: 16px 40px; background: white; color: #951b81; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 12px 28px -8px rgba(0,0,0,0.2); font-size: 16px; }
+      .cta-meta { display: block; margin-top: 16px; color: #6b7280; font-size: 14px; }
+      .grid-3 { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+      .grid-4 { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .feature-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px; }
+      .feature-card .icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: linear-gradient(135deg, #fdf2f8, #fce4f1); margin-bottom: 16px; }
+      .feature-card p { font-size: 14px; color: #4b5563; line-height: 1.7; }
+      .vertical-card { text-align: center; background: white; padding: 28px; border-radius: 12px; border: 1px solid #e5e7eb; }
+      .vertical-card .emoji { font-size: 32px; display: block; margin-bottom: 12px; }
+      .vertical-card p { font-size: 13px; color: #6b7280; }
+      /* Hero mascotas Zubi + Kora right side (v2) */
+      .pgfit-hero-bg .container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+      .hero-copy { min-width: 0; }
+      .hero-mascotas { position: relative; height: 480px; display: flex; align-items: center; justify-content: center; }
+      .hero-mascotas .mascota { position: absolute; border-radius: 50%; box-shadow: 0 30px 60px -15px rgba(30,144,214,0.35), 0 12px 24px -8px rgba(243,156,42,0.25); transition: transform 0.3s ease; }
+      .hero-mascotas .mascota img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+      .hero-mascotas .mascota model-viewer { width: 100%; height: 100%; border-radius: 50%; --poster-color: transparent; background: transparent; display: block; }
+      .hero-mascotas .mascota { overflow: hidden; }
+      .hero-mascotas .mascota-zubi { width: 260px; height: 260px; top: 20px; right: 40px; z-index: 2; animation: pgfit-float-zubi 6s ease-in-out infinite; }
+      .hero-mascotas .mascota-kora { width: 220px; height: 220px; bottom: 30px; left: 30px; z-index: 1; animation: pgfit-float-kora 7s ease-in-out infinite; }
+      .hero-mascotas .mascota-zubi { box-shadow: 0 30px 60px -15px rgba(30,144,214,0.45), 0 12px 24px -8px rgba(30,144,214,0.25); }
+      .hero-mascotas .mascota-kora { box-shadow: 0 30px 60px -15px rgba(243,156,42,0.45), 0 12px 24px -8px rgba(243,156,42,0.25); }
+      .hero-mascotas::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 60% 40%, rgba(230,0,126,0.06) 0%, transparent 60%); pointer-events: none; }
+      @keyframes pgfit-float-zubi {
+        0%, 100% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(-12px) rotate(2deg); }
+      }
+      @keyframes pgfit-float-kora {
+        0%, 100% { transform: translateY(0) rotate(3deg); }
+        50% { transform: translateY(-10px) rotate(-3deg); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-mascotas .mascota { animation: none !important; }
+      }
+      @media (max-width: 900px) {
+        .pgfit-hero-bg .container { grid-template-columns: 1fr; gap: 32px; }
+        .hero-mascotas { height: 320px; order: -1; margin-top: -20px; }
+        .hero-mascotas .mascota-zubi { width: 180px; height: 180px; top: 10px; right: 20%; }
+        .hero-mascotas .mascota-kora { width: 150px; height: 150px; bottom: 10px; left: 20%; }
+      }
+      @media (max-width: 480px) {
+        .hero-mascotas { height: 260px; }
+        .hero-mascotas .mascota-zubi { width: 140px; height: 140px; }
+        .hero-mascotas .mascota-kora { width: 120px; height: 120px; }
+      }
+      /* Wellness studio visual section */
+      .wellness-visual { background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%); padding: 40px 0; }
+      .wellness-visual .container { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+      .wellness-visual .visual-frame { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 1 / 1; box-shadow: 0 30px 80px -20px rgba(230,0,126,0.25), 0 12px 32px -8px rgba(149,27,129,0.15); }
+      .wellness-visual .visual-frame::after { content: ''; position: absolute; inset: 0; border-radius: 24px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6); pointer-events: none; }
+      .wellness-visual .visual-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .wellness-visual .visual-frame::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(149,27,129,0.10) 100%); pointer-events: none; z-index: 1; }
+      .wellness-visual .visual-badge { position: absolute; bottom: 24px; left: 24px; z-index: 2; background: rgba(255,255,255,0.94); backdrop-filter: blur(10px); border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 600; color: #831843; letter-spacing: 0.02em; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+      .wellness-visual h2 { text-align: left; margin-bottom: 16px; }
+      .wellness-visual p.section-intro { text-align: left; margin-bottom: 24px; max-width: none; }
+      .wellness-visual ul.wellness-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+      .wellness-visual ul.wellness-bullets li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: #374151; line-height: 1.55; }
+      .wellness-visual ul.wellness-bullets li::before { content: '✓'; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #951b81, #e6007e); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; }
+      @media (max-width: 900px) {
+        .wellness-visual .container { grid-template-columns: 1fr; gap: 32px; }
+        .wellness-visual .visual-frame { aspect-ratio: 4 / 3; max-height: 400px; }
+      }
+      .bg-gray-50 { background: #f9fafb; }
+      .text-center { text-align: center; }
+      .cta-section { color: white; text-align: center; }
+      .cta-section h2 { color: white; }
+      .cta-section p { font-size: 18px; max-width: 600px; margin: 0 auto 32px; color: rgba(255,255,255,0.92); }
+      .faq-block { margin-bottom: 20px; }
+      .faq-block p { color: #1d1d1b; font-size: 15px; line-height: 1.7; }
+      footer { padding: 40px 0; text-align: center; color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; }
+      footer a { color: #4b5563; text-decoration: underline; }
+      @media (max-width: 640px) {
+        h1 { font-size: 32px; }
+        h2 { font-size: 24px; }
+        p.subtitle { font-size: 17px; }
+        section { padding: 48px 0; }
+      }
+      /* v4 — Avatares 2D peekaboo cerca CTA (discreto, sin distraer) */
+      .cta-with-buddy { position: relative; display: inline-block; }
+      .cta-buddy {
+        position: absolute; width: 78px; height: 78px; pointer-events: none;
+        opacity: 0.92; filter: drop-shadow(0 8px 12px rgba(30,144,214,0.20));
+        transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      .cta-buddy.buddy-zubi { top: -18px; right: -68px; animation: buddy-peek-zubi 4s ease-in-out infinite; }
+      .cta-buddy.buddy-kora {
+        bottom: -14px; left: -62px; width: 68px; height: 68px;
+        filter: drop-shadow(0 8px 12px rgba(243,156,42,0.20));
+        animation: buddy-peek-kora 5s ease-in-out infinite;
+      }
+      .cta-with-buddy:hover .cta-buddy { transform: scale(1.08); }
+      @keyframes buddy-peek-zubi {
+        0%, 100% { transform: translateY(0) rotate(-5deg); }
+        50% { transform: translateY(-6px) rotate(3deg); }
+      }
+      @keyframes buddy-peek-kora {
+        0%, 100% { transform: translateY(0) rotate(4deg); }
+        50% { transform: translateY(-5px) rotate(-3deg); }
+      }
+      .cta-section .cta-with-buddy .cta-buddy {
+        filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25)); opacity: 0.95;
+      }
+      @media (prefers-reduced-motion: reduce) { .cta-buddy { animation: none !important; } }
+      @media (max-width: 900px) {
+        .cta-buddy { width: 58px; height: 58px; }
+        .cta-buddy.buddy-zubi { top: -12px; right: -48px; }
+        .cta-buddy.buddy-kora { bottom: -10px; left: -44px; width: 52px; height: 52px; }
+      }
+      @media (max-width: 480px) { .cta-buddy { display: none; } }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+        <div class="brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 40" fill="none" aria-label="PGFit"><defs><linearGradient id="pgct-iso" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#951b81" /><stop offset="100%" stop-color="#e6007e" /></linearGradient></defs><path d="M2.6,14.77L23.16,1.8c1.72-1.09,3.96.15,3.96,2.19v31.22c0,1.43,1.16,2.58,2.58,2.58h7.42c1.43,0,2.59-1.16,2.58-2.59l-.02-11.94c0-.87-.44-1.68-1.17-2.16l-10.01-6.54c-.85-.55-1.94-.56-2.8-.02l-10.53,6.68c-.75.47-1.2,1.3-1.2,2.18v11.8c0,1.43-1.16,2.58-2.58,2.58H3.98c-1.43,0-2.58-1.16-2.58-2.58v-18.24c0-.89.46-1.71,1.21-2.19Z" fill="url(#pgct-iso)" /></svg>
+          <span>PGFit<small>by PropiedadGO</small></span>
+        </div>
+        <nav aria-label="Acceso" style="display:flex; gap:12px; align-items:center;">
+          <a href="https://contable.propiedadgo.com/login?product=gym&utm_source=pgfit_landing&utm_medium=header_login" style="color:#334155; font-weight:600; font-size:14px; text-decoration:none; padding:8px 14px;">Entrar</a>
+          <a href="https://contable.propiedadgo.com/register?product=gym&utm_source=pgfit_landing&utm_medium=header_signup" style="background-image:linear-gradient(135deg,#951b81,#e6007e); color:#fff; font-weight:700; font-size:14px; text-decoration:none; padding:9px 16px; border-radius:10px; box-shadow:0 4px 14px rgba(230,0,126,0.25);">Empezar gratis</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="pgfit-hero-bg">
+      <div class="container">
+        <div class="hero-copy">
+          <p style="font-size: 12px; letter-spacing: 2px; color: #e6007e; text-transform: uppercase; margin: 0 0 16px; font-weight: 600;">PROPIEDADGO · PGFIT</p>
+          <h1>El sistema operativo financiero<br><span class="pgfit-brand-text">para tu centro</span></h1>
+          <p class="subtitle">Gimnasios, centros de pilates y academias. Cobro recurrente automático, facturación TicketBAI / VeriFactu integrada y reserva de clases — todo en un solo lugar, sin Excel ni WhatsApp.</p>
+          <span class="cta-with-buddy">
+            <a href="https://captacion.propiedadgo.com/encuesta/gyms?utm_source=landing&utm_medium=pgfit_landing_v4&utm_campaign=presales_euskadi_q2_2026" class="cta-primary pgfit-gradient">Quiero mi Set Up gratis →</a>
+            <img src="/assets/mascotas/zubi-transparent.png" alt="" class="cta-buddy buddy-zubi" loading="eager" decoding="async" width="78" height="78" />
+          </span>
+          <span class="cta-meta">7 preguntas · 3 minutos · 1 semana setup gratis si participas</span>
+        </div>
+        <div class="hero-mascotas" role="presentation" aria-hidden="true" id="hero-mascotas">
+          <!-- WebP visible LIVE. GLB 3D pending Blender v6 (materials PBR + normals verified);
+               los v5 no renderizan visibles en model-viewer sobre fondo blanco (material Default). -->
+          <div class="mascota mascota-zubi" id="zubi-slot">
+            <picture id="zubi-fallback">
+              <source type="image/webp" srcset="/pgfit-mascota-zubi.webp" />
+              <img src="/pgfit-mascota-zubi.jpg" alt="Zubi — mascota conectora PropiedadGO" width="512" height="512" loading="eager" decoding="async" fetchpriority="high" />
+            </picture>
+          </div>
+          <div class="mascota mascota-kora" id="kora-slot">
+            <picture id="kora-fallback">
+              <source type="image/webp" srcset="/pgfit-mascota-kora.webp" />
+              <img src="/pgfit-mascota-kora.jpg" alt="Kora — mascota cálida PropiedadGO" width="512" height="512" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Lo que automatizas con <span class="pgfit-brand-text">PGFit</span></h2>
+        <p class="section-intro">Reemplaza el caos de cobros manuales, hojas de cálculo y WhatsApps con un sistema integrado que ya conoce las normas españolas de facturación.</p>
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="icon">💳</div>
+            <h3>Cobro recurrente automático</h3>
+            <p>SEPA Direct Debit + Bizum + tarjeta. Cuotas mensuales, anuales o trimestrales sin perseguir a nadie. Recordatorios automáticos a morosos.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📄</div>
+            <h3>Facturación TicketBAI / VeriFactu</h3>
+            <p>Cumples con TicketBAI (País Vasco), VeriFactu (territorio común) y SII (grandes empresas) sin pensar. Factura electrónica emitida automática a Hacienda.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📅</div>
+            <h3>Reserva de clases</h3>
+            <p>App para tus clientes — reservan, cancelan y compran bonos. Lista de espera, cupos por clase, multi-coach. Sin papeletas en la entrada.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Conciliación bancaria Open Banking</h3>
+            <p>Conecta tu banco. Cobros, gastos y morosos se cuadran solos. Cierres mensuales sin Excel.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📱</div>
+            <h3>App para tus clientes</h3>
+            <p>Inscripción online, calendario, reservas, comunicaciones masivas. Imagen profesional sin desarrollo propio.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">🤖</div>
+            <h3>Cierres anuales con IA</h3>
+            <p>Tu gestor recibe el cierre del año listo. Reduce coste asesoría. Detección automática de gastos deducibles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wellness studio visual section (Sprint SEO 2026-07-06 · imagen brand Clara/PGFit context 02_wellness_B_nordic_cozy) -->
+    <section class="wellness-visual">
+      <div class="container">
+        <div class="visual-frame">
+          <picture>
+            <source type="image/webp" srcset="/pgfit-studio-wellness.webp" />
+            <img src="/pgfit-studio-wellness.jpg" alt="Centro de pilates y yoga con luz natural y ambiente cálido, socios entrenando con PGFit" loading="lazy" decoding="async" width="1200" height="1200" />
+          </picture>
+          <span class="visual-badge">Centros wellness · pilates · yoga · fitness</span>
+        </div>
+        <div>
+          <p style="font-size: 12px; letter-spacing: 2px; color: #e6007e; text-transform: uppercase; margin: 0 0 12px; font-weight: 600;">Pensado para tu día a día</p>
+          <h2>Menos hojas de cálculo, más tiempo con tus socios</h2>
+          <p class="section-intro">PGFit se diseñó junto a gimnasios, estudios de pilates y yoga en Bizkaia. Cada pantalla resuelve algo que un centro real ya sufría: la fila de la caja, el cobro rebotado, el socio que no aparece a clase, la factura que se olvidó.</p>
+          <ul class="wellness-bullets">
+            <li>Reserva de clase con lista de espera automática — cero llamadas para reasignar plazas.</li>
+            <li>Cobro SEPA + Bizum recurrente sin persecución manual — reintentos inteligentes en caso de rebote.</li>
+            <li>Portal socio propio del centro (PWA) — tu marca, sin App Store, sin Play Store.</li>
+            <li>Facturación TicketBAI / VeriFactu — cumplimiento sin mover un dedo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gray-50">
+      <div class="container">
+        <h2 class="text-center">Diseñado para tu tipo de centro</h2>
+        <p class="section-intro text-center" style="margin-left: auto; margin-right: auto;">Cada vertical tiene plantillas, vocabulario y reportes específicos. Configurado de fábrica para tu modelo de negocio.</p>
+        <div class="grid-4">
+          <div class="vertical-card">
+            <span class="emoji">🏋️</span>
+            <h4>Gimnasios</h4>
+            <p>Cuota mensual + bonos + venta nutrición</p>
+          </div>
+          <div class="vertical-card">
+            <span class="emoji">🧘</span>
+            <h4>Pilates / Yoga</h4>
+            <p>Bonos por clases + reservas + lista de espera</p>
+          </div>
+          <div class="vertical-card">
+            <span class="emoji">📚</span>
+            <h4>Academias</h4>
+            <p>Refuerzo, idiomas, extraescolares + matrículas anuales</p>
+          </div>
+          <div class="vertical-card">
+            <span class="emoji">⚡</span>
+            <h4>CrossFit / Funcional</h4>
+            <p>WODs + atletas + multi-coach + competiciones</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Planes</h2>
+        <p class="section-intro">Tarifas mensuales transparentes según volumen de socios activos. Sin permanencia ni coste de setup salvo participación en encuesta presales.</p>
+        <div class="grid-3">
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=FREE&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_free" class="feature-card plan-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer;">
+            <h3>FREE — €0</h3>
+            <p><strong>Setup gratuito 1 semana</strong> incluido para participantes en la encuesta presales Q2 2026. Acceso completo a todas las funcionalidades durante el período.</p>
+            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Empezar gratis →</span>
+          </a>
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=PRO&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_pro" class="feature-card plan-card" style="border-color:#f3a4d7; text-decoration:none; color:inherit; display:block; cursor:pointer;">
+            <h3>PRO — €29/mes</h3>
+            <p>Hasta 100 socios activos. Cobros SEPA + Bizum + tarjeta. Facturación TicketBAI/VeriFactu/SII. Reserva de clases. App PWA cliente.</p>
+            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Contratar PRO →</span>
+          </a>
+          <a href="https://contable.propiedadgo.com/register?product=gym&plan=STUDIO&utm_source=pgfit_landing&utm_medium=plans_v3&utm_campaign=plan_studio" class="feature-card plan-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer;">
+            <h3>STUDIO — €79/mes</h3>
+            <p>Socios ilimitados. Conciliación Open Banking + multi-coach + IA para cierres anuales + soporte prioritario. Para centros con 200+ socios.</p>
+            <span style="display:inline-block; margin-top:12px; color:#e6007e; font-weight:700; font-size:14px;">Contratar STUDIO →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Preguntas frecuentes</h2>
+        <div class="faq-block">
+          <h3>¿Qué tipos de centros deportivos puede gestionar PGFit?</h3>
+          <p>Gimnasios tradicionales (cuota mensual + bonos), centros de pilates y yoga (bonos por clases + reservas + lista de espera), academias (refuerzo, idiomas, extraescolares + matrículas anuales) y CrossFit / centros de entrenamiento funcional (WODs + atletas + multi-coach + competiciones). Cada tipo de centro tiene plantillas y vocabulario específicos.</p>
+        </div>
+        <div class="faq-block">
+          <h3>¿Cómo funciona el cobro recurrente automático en PGFit?</h3>
+          <p>Mandato SEPA Direct Debit firmado por el socio (físico o digital con OTP). Cada periodo (mensual, trimestral, anual), el sistema lanza el adeudo automático al banco vía pain.008. Soporta también Bizum recurrente (CIT) y tarjeta. Si el cobro falla (R03/R09/R10), reintenta automáticamente y notifica al gestor del centro.</p>
+        </div>
+        <div class="faq-block">
+          <h3>¿PGFit cumple con TicketBAI, VeriFactu y SII?</h3>
+          <p>Sí. PGFit emite facturas conformes a TicketBAI para los tres territorios forales del País Vasco (registro software garante G88202601552295E), VeriFactu para territorio común (declaración responsable AEAT bajo PropiedadGO SL, RD 1007/2023) y SII para grandes empresas. El motor fiscal detecta el régimen según provincia del centro.</p>
+        </div>
+        <div class="faq-block">
+          <h3>¿Incluye PGFit app móvil para los clientes del centro?</h3>
+          <p>Sí, PWA para los socios: reserva de clases (con cupo y lista de espera), cancelación, compra de bonos, calendario, notificaciones de cobros y comunicaciones masivas del centro. Se instala en móvil como app nativa sin App Store ni Play Store, funciona en iOS y Android, y muestra la marca del centro (no la de PGFit).</p>
+        </div>
+        <div class="faq-block">
+          <h3>¿Qué necesito para empezar con PGFit?</h3>
+          <p>Solo el alta como centro (≈10 minutos): nombre comercial, CIF, IBAN para cobros, datos del responsable. PGFit te guía en la configuración inicial: importación de socios desde Excel/CSV, alta de productos (cuotas, bonos, matrículas), configuración de clases y horarios. Si participas en la encuesta presales pre-2026-Q3, recibes setup gratuito 1 semana con soporte humano.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pgfit-gradient cta-section">
+      <div class="container">
+        <h2>La herramienta que hace tu negocio más competitivo</h2>
+        <p>Tu contabilidad a un click, sin necesidad de ser experto. Tu portal app para tus clientes.</p>
+        <span class="cta-with-buddy">
+          <a href="https://captacion.propiedadgo.com/setup-pgfit?utm_source=pgfit_landing&utm_medium=cta_v4&utm_campaign=setup_request_q2_2026" class="cta-secondary">Solicita Set Up gratuito →</a>
+          <img src="/assets/mascotas/kora-transparent.png" alt="" class="cta-buddy buddy-kora" loading="lazy" decoding="async" width="68" height="68" />
+        </span>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        Built by the <strong style="color: #be185d;">PropiedadGO</strong> team in Bilbao · PropiedadGO SL · <a href="/legal/privacidad">Privacidad</a>
+      </div>
+    </footer>
+    <!-- v3 · GLB 3D removido temporalmente — mascotas GLB v5 con material Default no PBR no renderizan en model-viewer.
+         Pending Blender v6 pipeline (8 clips + materials PBR + normals). Meanwhile WebP visible (matches v2). -->
+  </body>
+</html>
