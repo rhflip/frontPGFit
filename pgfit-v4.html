@@ -198,11 +198,11 @@
       }
       .vertical-card .bg-img {
         position: absolute; inset: 0; z-index: -2; object-fit: cover; width: 100%; height: 100%;
-        opacity: 0.38;
+        opacity: 0.62;
       }
       .vertical-card::before {
         content: ''; position: absolute; inset: 0; z-index: -1;
-        background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.92) 100%);
+        background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.85) 100%);
       }
       .vertical-card.placeholder::before { background: linear-gradient(135deg, var(--pg-tint) 0%, var(--pg-tint-strong) 100%); }
       .vertical-card .emoji { font-size: 40px; display: block; margin-bottom: 12px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.10)); }
@@ -412,7 +412,11 @@
             <h4>Academias</h4>
             <p>Refuerzo, idiomas, extraescolares + matrículas anuales</p>
           </div>
-          <div class="vertical-card placeholder">
+          <div class="vertical-card">
+            <picture>
+              <source type="image/webp" srcset="/assets/verticals/crossfit-v2.webp" />
+              <img src="/assets/verticals/crossfit-v2.jpg" alt="" class="bg-img" loading="lazy" decoding="async" />
+            </picture>
             <span class="emoji">⚡</span>
             <h4>CrossFit / Funcional</h4>
             <p>WODs + atletas + multi-coach + competiciones</p>
