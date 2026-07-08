@@ -493,5 +493,29 @@
     </footer>
     <!-- v3 · GLB 3D removido temporalmente — mascotas GLB v5 con material Default no PBR no renderizan en model-viewer.
          Pending Blender v6 pipeline (8 clips + materials PBR + normals). Meanwhile WebP visible (matches v2). -->
+
+    <!-- Analytics inline LEAN — sprint marketer panel LIVE 2026-07-08.
+         Fire-and-forget landing_view al backend. Cero deps externos. -->
+    <script>
+      (function () {
+        if (typeof window === 'undefined' || typeof fetch === 'undefined') return;
+        try {
+          fetch('https://poster-backend-tktarhnw3q-ew.a.run.app/v1/events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              event_name: 'landing_view',
+              brand: 'pgfit',
+              product: 'pgfit',
+              metadata: { surface: 'pgfit_html_static' },
+              page_url: window.location.href,
+              referrer: document.referrer,
+            }),
+            keepalive: true,
+            credentials: 'include',
+          }).catch(function () { /* fire-and-forget */ });
+        } catch (e) { /* silent */ }
+      })();
+    </script>
   </body>
 </html>
