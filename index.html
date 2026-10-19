@@ -240,6 +240,17 @@
       .faq-block p { color: #1d1d1b; font-size: 15px; line-height: 1.7; }
       footer { padding: 40px 0; text-align: center; color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; }
       footer a { color: #4b5563; text-decoration: underline; }
+      /* WhatsApp de la marca (propGO Fit&Beauty, +34 722 558 134): botón flotante con el degradado PGFit */
+      .wa-fab { position: fixed; right: 20px; bottom: 20px; z-index: 50; display: inline-flex; align-items: center; gap: 0; height: 56px; padding: 0 16px; border-radius: 999px; background-image: linear-gradient(135deg, #951b81, #e6007e); color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; box-shadow: 0 12px 28px -8px rgba(230,0,126,0.55), 0 4px 10px -2px rgba(149,27,129,0.35); transition: transform .18s ease, box-shadow .18s ease, gap .18s ease; }
+      .wa-fab svg { width: 24px; height: 24px; flex-shrink: 0; fill: currentColor; }
+      .wa-fab .wa-label { max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width .22s ease; }
+      .wa-fab:hover, .wa-fab:focus-visible { transform: translateY(-2px); gap: 10px; box-shadow: 0 16px 34px -8px rgba(230,0,126,0.6), 0 6px 14px -2px rgba(149,27,129,0.4); }
+      .wa-fab:hover .wa-label, .wa-fab:focus-visible .wa-label { max-width: 180px; padding-right: 2px; }
+      .wa-fab:focus-visible { outline: 3px solid #fce4f1; outline-offset: 3px; }
+      footer .wa-link { display: inline-flex; align-items: center; gap: 6px; color: #be185d; font-weight: 600; text-decoration: none; }
+      footer .wa-link svg { width: 15px; height: 15px; fill: currentColor; }
+      @media (max-width: 640px) { .wa-fab { right: 16px; bottom: 16px; width: 56px; padding: 0; justify-content: center; } .wa-fab .wa-label { display: none; } }
+      @media (prefers-reduced-motion: reduce) { .wa-fab, .wa-fab .wa-label { transition: none; } }
       @media (max-width: 640px) {
         h1 { font-size: 32px; }
         h2 { font-size: 24px; }
@@ -489,8 +500,14 @@
     <footer>
       <div class="container">
         Built by the <strong style="color: #be185d;">PropiedadGO</strong> team in Bilbao · PropiedadGO SL · <a href="/legal/privacidad">Privacidad</a>
+        · <a class="wa-link" data-wa="footer" href="https://wa.me/34722558134?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20propGO%20Fit%26Beauty" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>WhatsApp</a>
       </div>
     </footer>
+
+    <a class="wa-fab" data-wa="fab" href="https://wa.me/34722558134?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20propGO%20Fit%26Beauty" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      <span class="wa-label">Escríbenos</span>
+    </a>
     <!-- v3 · GLB 3D removido temporalmente — mascotas GLB v5 con material Default no PBR no renderizan en model-viewer.
          Pending Blender v6 pipeline (8 clips + materials PBR + normals). Meanwhile WebP visible (matches v2). -->
 
@@ -515,6 +532,20 @@
             credentials: 'include',
           }).catch(function () { /* fire-and-forget */ });
         } catch (e) { /* silent */ }
+        // Clic en WhatsApp (botón flotante o pie): mismo endpoint, mismo fire-and-forget
+        document.querySelectorAll('[data-wa]').forEach(function (a) {
+          a.addEventListener('click', function () {
+            try {
+              fetch('https://poster-backend-tktarhnw3q-ew.a.run.app/v1/events', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event_name: 'whatsapp_click', brand: 'pgfit', product: 'pgfit', metadata: { surface: a.getAttribute('data-wa') }, page_url: window.location.href, referrer: document.referrer }),
+                keepalive: true,
+                credentials: 'include',
+              }).catch(function () { /* fire-and-forget */ });
+            } catch (e) { /* silent */ }
+          });
+        });
       })();
     </script>
   </body>
