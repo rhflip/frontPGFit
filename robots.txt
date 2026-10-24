@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pgfit.propiedadgo.com/sitemap.xml
