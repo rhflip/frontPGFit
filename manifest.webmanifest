@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "PGFit — Sistema operativo financiero para gimnasios",
-  "short_name": "PGFit",
+  "name": "propGO Fit&Beauty — Domingos sin Excel",
+  "short_name": "propGO Fit",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -20,13 +20,13 @@
     { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "screenshots": [
-    { "src": "/pgfit-studio-wellness.jpg", "sizes": "1200x1200", "type": "image/jpeg", "form_factor": "wide", "label": "Wellness studio con PGFit" }
+    { "src": "/pgfit-studio-wellness.jpg", "sizes": "1200x1200", "type": "image/jpeg", "form_factor": "wide", "label": "Wellness studio con propGO Fit&Beauty" }
   ],
   "shortcuts": [
     {
       "name": "Empezar gratis",
       "short_name": "Empezar",
-      "description": "Registro rápido en PGFit",
+      "description": "Registro rápido en propGO Fit&Beauty",
       "url": "/?src=shortcut&action=register",
       "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
     }
