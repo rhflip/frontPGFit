@@ -3,7 +3,7 @@ const h=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 const v=JSON.parse(fs.readFileSync(path.join(__dirname,'..','vercel.json'),'utf8'));
 assert(h.includes('eu.i.posthog.com'));
 assert.strictEqual((h.match(/persistence:'memory'/g)||[]).length,1);
-assert(/data-posthog-key=""/.test(h),'clave vacía');
+assert(/data-posthog-key="(phc_[A-Za-z0-9]+)?"/.test(h),'clave vacía o phc_ pública');
 const m=h.match(/if \(key\) \{([\s\S]*?)\n        \}\n      \}\)\(\);/);
 assert(m,'init envuelto en if (key)');
 assert(m[1].includes('posthog.init('));
