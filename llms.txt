@@ -1,0 +1,16 @@
+# propGO Fit&Beauty
+
+> propGO Fit&Beauty es un software de gestión para gimnasios, estudios de pilates y yoga, boxes de crossfit, peluquerías, centros de uñas y centros de masajes en España (con especial presencia en el País Vasco y Bizkaia). Reservas de clases, cobros automáticos de cuotas y bonos, comunicación con clientes y «Domingos sin Excel».
+
+## Producto
+
+- [propGO Fit&Beauty — página principal](https://pgfit.propiedadgo.com/): qué hace, planes y precios, preguntas frecuentes.
+
+## Software por tipo de negocio
+
+- [Software para peluquerías](https://pgfit.propiedadgo.com/software-para-peluquerias): citas, cobros y clientes de peluquería.
+- [Software para pilates](https://pgfit.propiedadgo.com/software-para-pilates): reservas, bonos y cuotas de estudios de pilates.
+- [Software para yoga](https://pgfit.propiedadgo.com/software-para-yoga): reservas, bonos y cuotas de estudios de yoga.
+- [Software para crossfit](https://pgfit.propiedadgo.com/software-para-crossfit): cuotas, reservas y comunicación de boxes de crossfit.
+- [Software para centros de uñas](https://pgfit.propiedadgo.com/software-para-centros-de-unas): citas y cobros de centros de uñas.
+- [Software para centros de masajes](https://pgfit.propiedadgo.com/software-para-centros-de-masajes): citas y cobros de centros de masajes.
