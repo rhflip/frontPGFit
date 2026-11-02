@@ -8,9 +8,9 @@
 
 ## Software por tipo de negocio
 
-- [Software para peluquerías](https://pgfit.propiedadgo.com/software-para-peluquerias): citas, cobros y clientes de peluquería.
+- [Software para peluquerías](https://pgfit.propiedadgo.com/software-para-peluquerias): reservas y cobros de peluquería.
 - [Software para pilates](https://pgfit.propiedadgo.com/software-para-pilates): reservas, bonos y cuotas de estudios de pilates.
 - [Software para yoga](https://pgfit.propiedadgo.com/software-para-yoga): reservas, bonos y cuotas de estudios de yoga.
 - [Software para crossfit](https://pgfit.propiedadgo.com/software-para-crossfit): cuotas, reservas y comunicación de boxes de crossfit.
-- [Software para centros de uñas](https://pgfit.propiedadgo.com/software-para-centros-de-unas): citas y cobros de centros de uñas.
-- [Software para centros de masajes](https://pgfit.propiedadgo.com/software-para-centros-de-masajes): citas y cobros de centros de masajes.
+- [Software para centros de uñas](https://pgfit.propiedadgo.com/software-para-centros-de-unas): reservas y cobros de centros de uñas.
+- [Software para centros de masajes](https://pgfit.propiedadgo.com/software-para-centros-de-masajes): reservas y cobros de centros de masajes.
