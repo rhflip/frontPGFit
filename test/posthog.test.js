@@ -1,0 +1,14 @@
+const fs=require('fs'),assert=require('assert'),path=require('path');
+const h=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+const v=JSON.parse(fs.readFileSync(path.join(__dirname,'..','vercel.json'),'utf8'));
+assert(h.includes('eu.i.posthog.com'));
+assert.strictEqual((h.match(/persistence:'memory'/g)||[]).length,1);
+assert(/data-posthog-key=""/.test(h),'clave vacía');
+const m=h.match(/if \(key\) \{([\s\S]*?)\n        \}\n      \}\)\(\);/);
+assert(m,'init envuelto en if (key)');
+assert(m[1].includes('posthog.init('));
+assert(h.indexOf('posthog.init(')>h.indexOf('if (key)'));
+const csp=JSON.stringify(v);
+assert(/script-src[^;]*eu-assets\.i\.posthog\.com/.test(csp));
+assert(/connect-src[^;]*eu\.i\.posthog\.com/.test(csp));
+console.log('OK');

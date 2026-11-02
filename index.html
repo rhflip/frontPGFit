@@ -296,6 +296,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- PostHog (PRO-1011 A-1): la clave va en data-posthog-key; vacía = no inicializa ni hace red -->
+    <script id="posthog-snippet" data-posthog-key="">
+      (function () {
+        var key = document.getElementById('posthog-snippet').getAttribute('data-posthog-key');
+        if (key) {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://eu-assets.i.posthog.com/static/array.js';
+          s.onload = function () {
+            posthog.init(key, { api_host: 'https://eu.i.posthog.com', persistence:'memory', disable_session_recording:false, autocapture:true, capture_pageview:true, brand:'fit-beauty',
+              loaded: function (ph) { ph.register({ brand: 'fit-beauty' }); } });
+          };
+          document.head.appendChild(s);
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="top-nav">
