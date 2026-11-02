@@ -1,0 +1,49 @@
+# propGO Fit&Beauty
+
+> propGO Fit&Beauty es un software de gestión para gimnasios, estudios de pilates y yoga, boxes de crossfit, peluquerías, centros de uñas y centros de masajes en España (con especial presencia en el País Vasco y Bizkaia). Reservas de clases, cobros automáticos de cuotas y bonos, comunicación con clientes y «Domingos sin Excel».
+
+## Qué es
+
+propGO Fit&Beauty es el software de gestión de PropiedadGO para centros de deporte, bienestar y belleza. Su lema es «Domingos sin Excel. Tu centro y tus clientes, en una app.» Sitio: https://pgfit.propiedadgo.com/
+
+## Qué hace
+
+- Reserva de clases: app para los clientes, que reservan, cancelan y compran bonos; cupos por clase, lista de espera y varios coaches.
+- Cobros automáticos: cobro recurrente de cuotas y bonos por SEPA y Bizum, sin perseguir pagos a mano.
+- Facturación TicketBAI / VeriFactu integrada.
+- Comunicación con clientes: comunicaciones masivas y notificaciones de cobros.
+- Todo en un solo lugar, sin Excel ni WhatsApp.
+
+## Para quién
+
+- Gimnasios: [https://pgfit.propiedadgo.com/](https://pgfit.propiedadgo.com/)
+- Estudios de pilates: [software para pilates](https://pgfit.propiedadgo.com/software-para-pilates)
+- Estudios de yoga: [software para yoga](https://pgfit.propiedadgo.com/software-para-yoga)
+- Boxes de crossfit: [software para crossfit](https://pgfit.propiedadgo.com/software-para-crossfit)
+- Peluquerías: [software para peluquerías](https://pgfit.propiedadgo.com/software-para-peluquerias)
+- Centros de uñas: [software para centros de uñas](https://pgfit.propiedadgo.com/software-para-centros-de-unas)
+- Centros de masajes: [software para centros de masajes](https://pgfit.propiedadgo.com/software-para-centros-de-masajes)
+
+## Dónde
+
+Se usa en toda España. Presencia especial en el País Vasco: Bilbao, Bizkaia y Euskadi.
+
+## Planes
+
+FREE (0 €, 2 meses con acceso completo), PRO (29 €, hasta 100 socios activos) y STUDIO (99 €, socios ilimitados). Detalle en https://pgfit.propiedadgo.com/
+
+## Cómo contactar
+
+- WhatsApp: https://wa.me/34722558134
+- Alta de centro: https://contable.propiedadgo.com/register?product=gym
+- LinkedIn: https://www.linkedin.com/company/146763916
+- Instagram: https://www.instagram.com/fit.beauty.pymes/
+
+## Alternativas que comparan con nosotros
+
+Quien busca software de este tipo también compara con:
+
+- Peluquerías y belleza: Booksy, AgendaPro, CitaClic.
+- Pilates y yoga: Virtuagym, Mindbody, Kydemy.
+- Crossfit: CrossHero, WodBuster, Resawod.
+- Mixto, en español: Bewe.
