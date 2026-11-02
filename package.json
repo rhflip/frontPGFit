@@ -4,6 +4,7 @@
   "private": true,
   "description": "PGFit landing standalone — sistema operativo financiero para gimnasios, pilates y academias",
   "scripts": {
-    "build": "echo 'static site, no build needed' && exit 0"
+    "build": "echo 'static site, no build needed' && exit 0",
+    "test": "node --test tests/ && node test/og.test.js && node test/org-schema.test.js && node test/posthog.test.js"
   }
 }
