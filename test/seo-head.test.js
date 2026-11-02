@@ -1,0 +1,31 @@
+const fs=require('fs'),assert=require('assert'),path=require('path');
+const h=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+const un=s=>s.replace(/&amp;/g,'&');
+const title=un(h.match(/<title>([^<]*)<\/title>/)[1]);
+const get=(re)=>un(h.match(re)[1]);
+const desc=get(/<meta name="description" content="([^"]*)"/);
+const ogT=get(/<meta property="og:title" content="([^"]*)"/);
+const ogD=get(/<meta property="og:description" content="([^"]*)"/);
+const verts=[/pilates/i,/yoga/i,/crossfit/i,/peluquer/i,/u[ñn]as/i,/masaj/i];
+for(const [n,s] of [['title',title],['description',desc],['og:title',ogT],['og:description',ogD]]){
+  for(const v of verts) assert(v.test(s),`${n} sin ${v}: ${s}`);
+  assert(/Espa[ñn]a/.test(s),`${n} sin España`);
+  assert(!/saas/i.test(s),`${n} contiene SaaS`);
+}
+assert(/software|programa/i.test(title)&&/software|programa/i.test(desc),'software/programa');
+assert(/propGO Fit&Beauty/.test(title),'marca en title');
+assert(/Domingos sin Excel/.test(ogT)||/Domingos sin Excel/.test(desc),'lema conservado');
+const blocks=[...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+const app=blocks.find(b=>b['@type']==='SoftwareApplication');
+assert(app,'SoftwareApplication');
+const area=a=>a&&a.name==='España';
+assert(area(app.areaServed),'SoftwareApplication.areaServed España');
+assert(app.audience&&app.audience['@type']==='BusinessAudience','audience');
+for(const v of verts) assert(v.test(JSON.stringify(app.audience)),`audience sin ${v}`);
+const org=app.publisher;
+assert(area(org.areaServed),'Organization.areaServed España');
+assert(Array.isArray(org.knowsAbout)&&org.knowsAbout.length>=6,'knowsAbout >=6');
+for(const v of verts) assert(org.knowsAbout.some(k=>v.test(k)),`knowsAbout sin ${v}`);
+assert(!/saas/i.test(JSON.stringify(blocks)),'SaaS en JSON-LD');
+assert(/data-posthog-key="[^"]+"/.test(h),'clave PostHog conservada');
+console.log('OK');
