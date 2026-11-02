@@ -1,0 +1,12 @@
+const fs=require('fs'),assert=require('assert'),path=require('path');
+const root=path.join(__dirname,'..');
+const h=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const blocks=[...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+assert(blocks.length>=2,'bloques ld+json');
+assert.strictEqual((h.match(/"@type": "Organization"/g)||[]).length,1,'una sola Organization');
+const org=blocks.map(b=>b.publisher).find(p=>p&&p['@type']==='Organization');
+assert(org,'Organization en publisher');
+assert(org.logo&&/^https:\/\/pgfit\.propiedadgo\.com\/[^ ]+$/.test(org.logo),'logo absoluto');
+assert(fs.existsSync(path.join(root,new URL(org.logo).pathname)),'el fichero del logo existe');
+if(org.sameAs!==undefined){assert(Array.isArray(org.sameAs)&&org.sameAs.length>=1&&org.sameAs.every(u=>/^https:\/\//.test(u)),'sameAs https');}
+console.log('OK');
