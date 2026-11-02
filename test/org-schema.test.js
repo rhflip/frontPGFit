@@ -8,5 +8,5 @@ const org=blocks.map(b=>b.publisher).find(p=>p&&p['@type']==='Organization');
 assert(org,'Organization en publisher');
 assert(org.logo&&/^https:\/\/pgfit\.propiedadgo\.com\/[^ ]+$/.test(org.logo),'logo absoluto');
 assert(fs.existsSync(path.join(root,new URL(org.logo).pathname)),'el fichero del logo existe');
-assert(Array.isArray(org.sameAs)&&org.sameAs.length===2&&org.sameAs.every(u=>/^https:\/\//.test(u)),'sameAs https');
+assert(Array.isArray(org.sameAs)&&org.sameAs.length===3&&org.sameAs.every(u=>/^https:\/\//.test(u)),'sameAs https');
 console.log('OK');
