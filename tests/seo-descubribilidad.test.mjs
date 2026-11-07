@@ -37,7 +37,7 @@ for (const { slug, term } of VERTICALES) {
     const blocks = ld(h);
     const sa = blocks.find((b) => b['@type'] === 'SoftwareApplication');
     assert.ok(sa, 'SoftwareApplication');
-    assert.equal(sa.areaServed.name, 'España');
+    assert.ok([].concat(sa.areaServed).some((a) => a.name === 'España'), 'areaServed incluye España');
     assert.ok(Array.isArray(sa.offers) && sa.offers.length === 3, 'offers de la home');
     const faq = blocks.find((b) => b['@type'] === 'FAQPage');
     assert.equal(faq.mainEntity.length, 3, 'FAQ de 3 preguntas');

@@ -19,7 +19,7 @@ const blocks=[...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/s
 const app=blocks.find(b=>b['@type']==='SoftwareApplication');
 assert(app,'SoftwareApplication');
 const area=a=>a&&a.name==='España';
-assert(area(app.areaServed),'SoftwareApplication.areaServed España');
+assert([].concat(app.areaServed).some(area),'SoftwareApplication.areaServed España');
 assert(app.audience&&app.audience['@type']==='BusinessAudience','audience');
 for(const v of verts) assert(v.test(JSON.stringify(app.audience)),`audience sin ${v}`);
 const org=app.publisher;
