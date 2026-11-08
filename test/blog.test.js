@@ -1,7 +1,7 @@
 const fs=require('fs'),assert=require('assert'),path=require('path');
 const raiz=path.join(__dirname,'..');
 const base='https://pgfit.propiedadgo.com/';
-const paginas=['blog/index','blog/software-gestion-pilates-bilbao','blog/gestion-peluqueria-estetica-bizkaia'];
+const paginas=['blog/index','blog/software-gestion-pilates-bilbao','blog/gestion-peluqueria-estetica-bizkaia','blog/software-gestion-yoga-bilbao','blog/gestion-box-crossfit-bizkaia','blog/gestion-centro-de-unas-bilbao','blog/gestion-centro-de-masajes-bizkaia','blog/software-gestion-gimnasio-bilbao'];
 const urls={'blog/index':'blog'};
 const sitemap=fs.readFileSync(path.join(raiz,'sitemap.xml'),'utf8');
 const prohibidas=/gratis|gratuit|descuento|oferta|garantizad|mejor del mercado/i;
@@ -29,8 +29,9 @@ for(const pg of paginas){
   for(const r of hrefs)assert(existe(r)||r.startsWith('/legal/')||/\.(svg|png|webmanifest)/.test(r),pg+': enlace roto '+r);
   assert(sitemap.includes(`<loc>${base}${slug}</loc>`),pg+': no está en sitemap.xml');
   if(pg!=='blog/index'){
-    const v=pg.includes('pilates')?'/software-para-pilates':'/software-para-peluquerias';
-    assert(h.includes(`href="${v}"`),pg+': sin enlace a su vertical');
+    const vm={pilates:'/software-para-pilates',yoga:'/software-para-yoga',crossfit:'/software-para-crossfit','de-unas':'/software-para-centros-de-unas','de-masajes':'/software-para-centros-de-masajes',gimnasio:'/'};
+    const v=Object.keys(vm).filter(k=>pg.includes(k)).map(k=>vm[k])[0]||'/software-para-peluquerias';
+    assert(h.slice(h.indexOf("<main")).includes(`href="${v}"`),pg+': sin enlace a su vertical');
     assert(/href="\/(bizkaia|bilbao)"/.test(h),pg+': sin enlace a zona');
     const palabras=h.replace(/[\s\S]*<main/,'').replace(/<[^>]*>/g,' ').split(/\s+/).filter(Boolean).length;
     assert(palabras>=650,pg+': pocas palabras '+palabras);
