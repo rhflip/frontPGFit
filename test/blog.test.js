@@ -37,4 +37,13 @@ for(const pg of paginas){
     assert(palabras>=650,pg+': pocas palabras '+palabras);
   }
 }
+// T1 embudo: analítica del blog
+console.log('blog/*.html a comprobar (analytics-blog.js): '+paginas.length);
+const an=path.join(raiz,'assets/analytics-blog.js');
+assert(fs.existsSync(an),'falta assets/analytics-blog.js');
+const js=fs.readFileSync(an,'utf8');
+for(const t of ['landing_view','cta_click','pgfit_blog','keepalive:true','.catch'])assert(js.includes(t),'analytics-blog.js sin '+t);
+let con=0;
+for(const pg of paginas){const h=fs.readFileSync(path.join(raiz,pg+'.html'),'utf8');assert(h.includes('<script src="/assets/analytics-blog.js" defer></script>'),pg+': sin assets/analytics-blog.js');con++;}
+console.log('analytics-blog.js referenciado: '+con+'/'+paginas.length);
 console.log('OK blog');
