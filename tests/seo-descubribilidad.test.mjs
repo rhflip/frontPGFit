@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -111,4 +111,14 @@ test('los tres hubs tienen texto propio (no solo el nombre cambiado)', () => {
 test('las verticales y la home enlazan las zonas', () => {
   for (const f of [...VERTICALES.map((v) => `${v.slug}.html`), 'index.html'])
     for (const { slug } of ZONAS) assert.ok(read(f).includes(`href="/${slug}"`), `${f} → ${slug}`);
+});
+
+// PEND-FB-DESCUBRIBILIDAD T-5 (2026-11-15): las páginas que Google ya indexa enlazan al blog y a sus 7 artículos (sin esto el blog sólo se descubre por el sitemap).
+test('páginas de vertical y de zona enlazan al blog y a cada artículo', () => {
+  const articulos = readdirSync(path.join(root, 'blog')).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => `/blog/${f.replace(/\.html$/, '')}`);
+  assert.equal(articulos.length, 7, 'siete artículos');
+  for (const f of [...VERTICALES.map((v) => `${v.slug}.html`), 'bizkaia.html', 'bilbao.html', 'pais-vasco.html']) {
+    const h = read(f);
+    for (const href of ['/blog', ...articulos]) assert.ok(h.includes(`href="${href}"`), `${f} enlaza a ${href}`);
+  }
 });
