@@ -27,6 +27,10 @@
     {
       "source": "/sw.js",
       "destination": "/sw-cleanup.js"
+    },
+    {
+      "source": "/api/public/surveys/submit",
+      "destination": "https://captacion.propiedadgo.com/api/public/surveys/submit"
     }
   ],
   "headers": [

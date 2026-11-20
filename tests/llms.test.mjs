@@ -17,7 +17,7 @@ for (const f of ['llms.txt', 'llms-full.txt']) {
     assert(!/saas/i.test(t), 'prohibido SaaS');
     for (const s of SLUGS) assert(t.includes(`https://pgfit.propiedadgo.com${s})`) || t.includes(`https://pgfit.propiedadgo.com${s} `) || t.includes(`https://pgfit.propiedadgo.com${s}\n`), `falta ${s}`);
     const enlaces = [...t.matchAll(/\]\((https:\/\/pgfit\.propiedadgo\.com)(\/[^)\s]*)\)/g)].map(m => m[2]);
-    for (const e of enlaces) assert(e === '/' || SLUGS.includes(e), `enlace fuera de la lista: ${e}`);
+    for (const e of enlaces) assert(e === '/' || e === '/mx/piloto' || SLUGS.includes(e), `enlace fuera de la lista: ${e}`);
   });
 }
 test('llms-full nombra competidores de M-0', () => {

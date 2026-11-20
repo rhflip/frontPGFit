@@ -14,3 +14,7 @@
 - [Software para crossfit](https://pgfit.propiedadgo.com/software-para-crossfit): cuotas, reservas y comunicación de boxes de crossfit.
 - [Software para centros de uñas](https://pgfit.propiedadgo.com/software-para-centros-de-unas): reservas y cobros de centros de uñas.
 - [Software para centros de masajes](https://pgfit.propiedadgo.com/software-para-centros-de-masajes): reservas y cobros de centros de masajes.
+
+## México
+
+- [Piloto en México](https://pgfit.propiedadgo.com/mx/piloto): lista de espera del piloto para salones, estéticas, barberías y estudios de pilates, yoga y crossfit.
