@@ -18,3 +18,6 @@
 ## México
 
 - [Piloto en México](https://pgfit.propiedadgo.com/mx/piloto): lista de espera del piloto para salones, estéticas, barberías y estudios de pilates, yoga y crossfit.
+- [Cómo facturar (CFDI) cuando una clienta lo pide en tu salón](https://pgfit.propiedadgo.com/blog/mx-como-facturar-cfdi-salon-de-belleza): guía para la dueña de un salón.
+- [Qué datos necesita un CFDI de servicios de belleza](https://pgfit.propiedadgo.com/blog/mx-datos-cfdi-servicios-de-belleza): guía general.
+- [Estudio de pilates, yoga o crossfit](https://pgfit.propiedadgo.com/blog/mx-reservas-cupos-lista-de-espera-estudio): reservas, cupos y lista de espera.

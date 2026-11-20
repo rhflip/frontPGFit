@@ -332,6 +332,17 @@
       </div>
     </section>
 
+    <section>
+      <div class="container">
+        <h2>Guías para tu negocio</h2>
+        <ul style="list-style:none;padding:0;display:grid;gap:12px;">
+          <li><a href="/blog/mx-como-facturar-cfdi-salon-de-belleza" style="color:#be185d;font-weight:600;">Cómo facturar (CFDI) cuando una clienta lo pide en tu salón</a></li>
+          <li><a href="/blog/mx-datos-cfdi-servicios-de-belleza" style="color:#be185d;font-weight:600;">Qué datos necesita un CFDI de servicios de belleza</a></li>
+          <li><a href="/blog/mx-reservas-cupos-lista-de-espera-estudio" style="color:#be185d;font-weight:600;">Estudio de pilates, yoga o crossfit: reservas, cupos y lista de espera</a></li>
+        </ul>
+      </div>
+    </section>
+
     <footer>
       <div class="container">
         <a href="/?utm_source=pgfit&amp;utm_medium=web&amp;utm_campaign=lx_mx">propGO Fit&amp;Beauty</a> · PropiedadGO SL · <a href="/legal/privacidad">Aviso de privacidad</a>
@@ -360,7 +371,7 @@
             pais: f['pais'].value,
             respondent_company_name: f['negocio'].value.trim(),
             respondent_email: f['email'].value.trim(),
-            respondent_phone: wa || '+0 000000000',
+            respondent_phone: wa || null,
             responses: {
               nombre: f['nombre'].value.trim(),
               tipo: f['tipo'].value,
