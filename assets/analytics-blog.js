@@ -4,6 +4,7 @@
   var EP = 'https://poster-backend-tktarhnw3q-ew.a.run.app/v1/events';
   var parts = window.location.pathname.replace(/\/+$/, '').split('/');
   var slug = parts[parts.length - 1] || 'blog';
+  var surface = window.location.pathname.indexOf('/blog/') === 0 || /^\/blog\/?$/.test(window.location.pathname) ? 'pgfit_blog' : 'pgfit_seo';
   function send(name, meta) {
     try {
       fetch(EP, {
@@ -15,13 +16,13 @@
       }).catch(function () { /* fire-and-forget */ });
     } catch (e) { /* silent */ }
   }
-  send('landing_view', { surface: 'pgfit_blog', slug: slug });
+  send('landing_view', { surface: surface, slug: slug });
   document.addEventListener('click', function (ev) {
     var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="contable.propiedadgo.com/register"]') : null;
     if (!a) return;
     var medium = '';
     try { medium = new URL(a.getAttribute('href'), window.location.href).searchParams.get('utm_medium') || ''; } catch (e) { /* silent */ }
-    send('cta_click', { surface: 'pgfit_blog', medium: medium });
+    send('cta_click', { surface: surface, medium: medium });
   });
   try {
     var s = document.createElement('script');
