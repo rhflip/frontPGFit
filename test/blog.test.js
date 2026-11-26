@@ -28,7 +28,7 @@ for(const pg of paginas){
   const hrefs=[...h.matchAll(/href="(\/[^"]*)"/g)].map(m=>m[1]);
   for(const r of hrefs)assert(existe(r)||r.startsWith('/legal/')||/\.(svg|png|webmanifest)/.test(r),pg+': enlace roto '+r);
   const cuerpo=h.slice(h.indexOf('<main'),h.indexOf('</main>'));
-  assert(cuerpo.includes('href="https://www.instagram.com/fit.beauty.pymes/?utm_source=pgfit_blog&amp;utm_medium=articulo&amp;utm_campaign=s-siembra"'),pg+': sin enlace a Instagram de F&B con UTM');
+  assert(cuerpo.includes('href="https://www.instagram.com/propgo.fitbeauty/?utm_source=pgfit_blog&amp;utm_medium=articulo&amp;utm_campaign=s-siembra"'),pg+': sin enlace a Instagram de F&B con UTM');
   assert(/href="https:\/\/www\.facebook\.com\/1328754620329758\?utm_source=pgfit_blog/.test(cuerpo),pg+': sin enlace a Facebook de F&B con UTM');
   assert(!/propiedadgo-group|146758394|61566690741152/.test(h),pg+': enlaza a un perfil de PropiedadGO Group');
   assert(sitemap.includes(`<loc>${base}${slug}</loc>`),pg+': no está en sitemap.xml');

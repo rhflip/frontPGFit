@@ -2,7 +2,7 @@ const fs=require('fs'),assert=require('assert'),path=require('path');
 const root=path.join(__dirname,'..');
 // S-SIEMBRA S-2: en todas las páginas el editor es la entidad de SU marca (F&B), con sus tres perfiles en sameAs
 // y PropiedadGO sólo como parentOrganization; ninguna URL de PropiedadGO Group en sameAs.
-const FB=['https://www.linkedin.com/company/146763916','https://www.facebook.com/1328754620329758','https://www.instagram.com/fit.beauty.pymes/'];
+const FB=['https://www.linkedin.com/company/146763916','https://www.facebook.com/1328754620329758','https://www.instagram.com/propgo.fitbeauty/'];
 const pages=['index','bilbao','bizkaia','pais-vasco','software-para-centros-de-masajes','software-para-centros-de-unas','software-para-crossfit','software-para-peluquerias','software-para-pilates','software-para-yoga'];
 for(const p of pages){
   const h=fs.readFileSync(path.join(root,p+'.html'),'utf8');
